@@ -120,8 +120,9 @@ body {
     font-weight: bold;
 }
 
-.get { background: #0077ff; }
-.post { background: #00b359; }
+.get { background: #00b359; }
+.post { background: rgb(138, 138, 1); }
+.put { background: blue;}
 .delete { background: #ff3c3c; }
 
 /* === BOTÓN COPIAR === */
