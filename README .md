@@ -1,12 +1,11 @@
-# 📦 Back-End Node.js — Arquitectura Modular + Firebase + JWT
+
+📦 Back-End Node.js — Arquitectura Modular + Firebase + JWT
 
 Este proyecto implementa un **API RESTful backend** utilizando una arquitectura por capas (**Controllers → Services → Models → Data → Routes → Middelware **), autenticación con **JWT**, persistencia en **Firebase Firestore**, configuración mediante **dotenv**, servidor Express con **CORS habilitado**, y deploy listo para **Vercel**.
 
----
+⚙️ Tecnologías Principales
 
-## ⚙️ Tecnologías Principales
-
-### Dependencias
+Dependencias
 
 ```json
     "cors": "^2.8.5",
@@ -14,8 +13,6 @@ Este proyecto implementa un **API RESTful backend** utilizando una arquitectura 
     "express": "^5.1.0",
     "firebase": "^12.6.0",
     "jsonwebtoken": "^9.0.2"
-
-## Instalación:
 
 📁 Arquitectura del Proyecto
 
@@ -64,41 +61,49 @@ Este proyecto implementa un **API RESTful backend** utilizando una arquitectura 
 
     Estructura escalable y testeable
 
-
 🔐 Middleware de Autenticación (JWT)
 
-    const jwt = require("jsonwebtoken");
+        import jwt from 'jsonwebtoken';
+        import 'dotenv/config';
 
-        module.exports = function (req, res, next) {
-        const header = req.headers["authorization"];
-        if (!header) return res.status(401).json({ error: "Token requerido" });
+        const secret_key = process.env.JWT_SECRET_KEY;
 
-        const token = header.split(" ")[1];
+        // Middleware para verificar el token JWT
+        export const authentication = (req, res, next) => {
+            const token = req.headers['authorization'].split(" ")[1];
 
-        try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            req.user = decoded;
-            next();
-        } catch (e) {
-            return res.status(403).json({ error: "Token inválido" });
+            if (!token) return res.sendStatus(401);
+
+
+            jwt.verify(token, secret_key, (err) => {
+                if (err) return res.sendStatus(403);
+                next();
+            });
         }
-        };
 
 🔥 Conexión a Firebase (Firestore)
 
-    const { initializeApp } = require("firebase/app");
-    const { getFirestore } = require("firebase/firestore");
+        import 'dotenv/config';
 
-    const config = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.FIREBASE_PROJECT_ID
-    };
+        import { initializeApp } from "firebase/app";
+        import { getFirestore } from 'firebase/firestore';
 
-    const app = initializeApp(config);
-    const db = getFirestore(app);
+        const firebaseConfig = {
+            apiKey: process.env.FIREBASE_API_KEY,
+            authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+            projectId: "back-end--node-js-pf",
+            storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+            messagingSenderId: "958601383992",
+            appId: process.env.FIREBASE_APP_ID
+        };
 
-    module.exports = db;
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Initialize Firestore
+        const db = getFirestore(app);
+
+        export { db };
 
 📌 API Reference (Endpoints)
 
@@ -152,7 +157,6 @@ FIREBASE_MESSAGING_SENDER_ID=xxxx
 FIREBASE_APP_ID=xxxx
 
 
-
-## 📜 Licencia
+📜 Licencia
 
 - Este proyecto está bajo la licencia MIT. ¡Siéntete libre de contribuir! 💻✨
