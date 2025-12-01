@@ -1,9 +1,23 @@
-
 📦 Back-End Node.js — Arquitectura Modular + Firebase + JWT
 
 Este proyecto implementa un **API RESTful backend** utilizando una arquitectura por capas (**Controllers → Services → Models → Data → Routes → Middelware **), autenticación con **JWT**, persistencia en **Firebase Firestore**, configuración mediante **dotenv**, servidor Express con **CORS habilitado**, y deploy listo para **Vercel**.
 
-⚙️ Tecnologías Principales
+---
+
+## 📂 Instalación y ejecución
+
+1. Clona el repositorio:
+
+    ```sh
+    https://github.com/Equi-Code/Back-End-Node-JS-PF.git
+    ```
+    
+2. Instala las dependencias:
+
+    ```sh
+    npm init -y 
+    npm install express cors dotenv firebase jsonwebtoken
+    ```
 
 Dependencias
 
@@ -14,7 +28,18 @@ Dependencias
     "firebase": "^12.6.0",
     "jsonwebtoken": "^9.0.2"
 
-📁 Arquitectura del Proyecto
+3.Configura las variables de entorno (ejemplo en .env.example).
+
+4.Inicia el servidor:
+
+    ```sh
+    npm start
+    ```
+El servidor se ejecutará en `http://localhost:3000`
+
+---
+
+## 📁 Arquitectura del Proyecto
 
         root/
         │
@@ -45,7 +70,9 @@ Dependencias
         ├── package.json
         └── vercel.json
 
-🏗️ Arquitectura y Diseño
+---
+
+## 🏗️ Arquitectura y Diseño
 
     Separation of Concerns (SoC)
 
@@ -61,51 +88,10 @@ Dependencias
 
     Estructura escalable y testeable
 
-🔐 Middleware de Autenticación (JWT)
-
-        import jwt from 'jsonwebtoken';
-        import 'dotenv/config';
-
-        const secret_key = process.env.JWT_SECRET_KEY;
-
-        // Middleware para verificar el token JWT
-        export const authentication = (req, res, next) => {
-            const token = req.headers['authorization'].split(" ")[1];
-
-            if (!token) return res.sendStatus(401);
+---
 
 
-            jwt.verify(token, secret_key, (err) => {
-                if (err) return res.sendStatus(403);
-                next();
-            });
-        }
-
-🔥 Conexión a Firebase (Firestore)
-
-        import 'dotenv/config';
-
-        import { initializeApp } from "firebase/app";
-        import { getFirestore } from 'firebase/firestore';
-
-        const firebaseConfig = {
-            apiKey: process.env.FIREBASE_API_KEY,
-            authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-            projectId: "back-end--node-js-pf",
-            storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-            messagingSenderId: "958601383992",
-            appId: process.env.FIREBASE_APP_ID
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-
-        // Initialize Firestore
-        const db = getFirestore(app);
-
-        export { db };
-
-📌 API Reference (Endpoints)
+## 📌 API Reference (Endpoints)
 
     POST /auth/register
 
@@ -117,23 +103,25 @@ Dependencias
 
     POST /auth/login
 
-    Autentica usuario
+        Autentica usuario
 
-    Devuelve token firmado
+        Devuelve token firmado
 
 Products (Protegidos)
 
-| Método | Endpoint        | Descripción      |
-| ------ | --------------- | ---------------- |
-| GET    | `/products`     | Listar productos |
-| GET    | `/products/:id` | Obtener por ID   |
-| POST   | `/products`     | Crear producto   |
-| PUT    | `/products/:id` | Actualizar       |
-| DELETE | `/products/:id` | Eliminar         |
+    | Método | Endpoint        | Descripción      |
+    | ------ | --------------- | ---------------- |
+    | GET    | `/products`     | Listar productos |
+    | GET    | `/products/:id` | Obtener por ID   |
+    | POST   | `/products`     | Crear producto   |
+    | PUT    | `/products/:id` | Actualizar       |
+    | DELETE | `/products/:id` | Eliminar         |
 
 Authorization: Bearer <token>
 
-🛠️ Scripts
+---
+
+## 🛠️ Scripts
 
     "scripts": {
     "start": "node index.js",
@@ -142,9 +130,27 @@ Authorization: Bearer <token>
 
 Modo desarrollo:
 
-npm run dev
+npm start
 
-📦 Variables de Entorno (.env)
+---
+
+## 🔑 Admin Access
+
+Para probar endpoints protegidos y funcionalidades de administrador, utiliza estas credenciales predeterminadas:
+
+    {
+    "email": "test@gmail.com",
+    "password": "123456"
+    }
+
+Esta cuenta de administrador tiene permisos completos para:
+
+Crear, leer, actualizar y eliminar productos
+Acceder a todos los endpoints protegidos.
+
+---
+
+## 📦 Variables de Entorno (.env)
 
 PORT=3000
 JWT_SECRET=your_secret_key
@@ -156,7 +162,32 @@ FIREBASE_STORAGE_BUCKET=xxxx
 FIREBASE_MESSAGING_SENDER_ID=xxxx
 FIREBASE_APP_ID=xxxx
 
+---
 
-📜 Licencia
+## 🚀 Deployment
 
-- Este proyecto está bajo la licencia MIT. ¡Siéntete libre de contribuir! 💻✨
+La aplicación está desplegada en Vercel y se actualiza automáticamente desde la rama principal.
+
+URL de producción: https://back-end-node-js-pf.vercel.app/
+
+    Pasos de despliegue:
+    Conecta tu repositorio de GitHub a Vercel
+    Configura todas las variables de entorno en el panel de control de Vercel
+    Los despliegues se realizan automáticamente al hacer push a la rama principal
+
+---
+
+
+## 📩 Uso en Postman
+
+Para probar la API en **Postman**, sigue estos pasos:
+
+1. **Abre Postman** y crea una nueva solicitud.
+2. **Configura la URL** con `http://localhost:3000/api/` o https://back-end-node-js-pf-r7nu.vercel.app/.
+3. **Si es un POST o PUT**, en la pestaña **Body**, selecciona `raw` y elige el formato `JSON`, luego ingresa los datos.
+4. **Envía la solicitud** y revisa la respuesta.
+
+También puedes importar una colección de Postman con todas las rutas. 🚀
+
+---
+
