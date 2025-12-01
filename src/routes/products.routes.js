@@ -4,7 +4,7 @@ import {
     getAllProducts, 
     getProductById, 
     deleteProduct, 
-    // editProduct 
+    editProduct 
 } from '../controllers/products.controllers.js';
 
 import { authentication } from "../middleware/authentication.js";
@@ -19,6 +19,6 @@ routes.post("/products/create", authentication, addProduct)
 
 routes.delete("/products/:id", authentication, deleteProduct)
 
-// routes.put('/products/:id', editProduct);
+routes.put('/products/:id', editProduct);
 
 export default routes;

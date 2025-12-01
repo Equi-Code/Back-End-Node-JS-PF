@@ -1,5 +1,5 @@
 import { db } from "../data/data.js";
-import { doc, getDoc, collection, getDocs, addDoc, deleteDoc, } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, addDoc, deleteDoc, updateDoc } from "firebase/firestore";
 
 export function obtenerProducto(id) {
     return new Promise(async (res, rej) => {
@@ -64,7 +64,7 @@ export function agregarProducto(producto) {
 
 }
 
-//agregarProducto({nombre: "yerba", categoria: "infusion", precio: 200})
+
 
 // export function actualizarProducto(id, producto) {
 //     return (
@@ -83,6 +83,37 @@ export function agregarProducto(producto) {
 //     )
 
 // }
+
+
+export function actualizarProducto(id, producto) {
+    return new Promise(async (res, rej) => {
+        try {
+            const ref = doc(db, "products", id);
+
+            // 1️⃣ Verificar que exista
+            const snap = await getDoc(ref);
+            if (!snap.exists()) {
+                return rej(new Error("El producto no existe"));
+            }
+
+            // 2️⃣ Actualizar
+            await updateDoc(ref, { ...producto });
+
+            // 3️⃣ Obtener datos actualizados
+            const updatedSnap = await getDoc(ref);
+            const updatedProduct = { id: updatedSnap.id, ...updatedSnap.data() };
+
+            console.log("Producto actualizado");
+
+            // 4️⃣ Devolver datos
+            res(updatedProduct);
+
+        } catch (error) {
+            console.log(error);
+            rej(error);
+        }
+    });
+}
 
 export function eliminarProducto(id) {
     return (

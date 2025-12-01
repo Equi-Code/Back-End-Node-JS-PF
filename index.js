@@ -3,11 +3,15 @@ import cors from "cors"
 import {configDotenv} from  "dotenv"
 import rutasLog from "./src/routes/auth.routes.js"
 import rutasProductos from "./src/routes/products.routes.js"
+import path from "path";
+import { fileURLToPath } from "url";
 
 configDotenv();
 
 const app = express ();
 const PORT = process.env.PORT || 3000;
+
+
 
 const corsConfig = {
 
@@ -20,6 +24,12 @@ const corsConfig = {
     optionsSuccessStatus: 204                                   // respuesta preflight exitosa
 
 }
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use (cors(corsConfig))
 app.use (express.json())

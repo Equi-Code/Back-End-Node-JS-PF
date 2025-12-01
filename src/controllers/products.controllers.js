@@ -39,6 +39,25 @@ export const deleteProduct = async (req, res) => {
 //     }
 // }
 
+export const editProduct = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const productData = req.body;
+
+        if (!id || !productData) {
+            return res.status(400).json({ error: "Faltan datos" });
+        }
+
+        const updatedProduct = await productService.editProductService(id, productData);
+        res.status(200).json(updatedProduct);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+};
+
+
 export const getAllProducts = async (req, res) => {
     try{
         console.log("paso1")

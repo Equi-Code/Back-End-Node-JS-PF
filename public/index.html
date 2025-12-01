@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Backend Online</title>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+    <!-- Contenedor invisible para partículas -->
+    <canvas id="particles"></canvas>
+
+    <div class="card fade-in">
+
+        <div class="logo">
+            <div class="rocket"></div>
+        </div>
+
+        <h1 class="title holographic">Backend API Online</h1>
+        <p class="subtitle">Servidor desplegado correctamente en Vercel</p>
+
+        <!-- Rutas Públicas -->
+        <div class="routes-box float-in glass-hover">
+            <h3 class="section-title">Rutas Públicas:</h3>
+
+            <div class="route public glass-hover">
+                <span class="method get">GET</span> /api/products
+                <button class="copy-btn" onclick="copiar('/api/products')">📋</button>
+            </div>
+            <div class="route public glass-hover">
+                <span class="method get">GET</span> /api/products/:id
+                <button class="copy-btn" onclick="copiar('/api/products/:id')">📋</button>
+            </div>
+        </div>
+
+        <!-- Rutas Protegidas -->
+        <div class="routes-box float-in glass-hover">
+            <h3 class="section-title">Rutas Protegidas (requieren token):</h3>
+
+            <div class="route protected glass-hover">
+                <span class="method post">POST</span> /api/products/create
+                <button class="copy-btn" onclick="copiar('/api/products/create')">📋</button>
+            </div>
+
+            <div class="route protected glass-hover">
+                <span class="method delete">DELETE</span> /api/products/:id
+                <button class="copy-btn" onclick="copiar('/api/products/:id')">📋</button>
+            </div>
+        </div>
+
+        <p class="footer">Powered by Node.js + Express</p>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <span class="toast-icon">✔</span>
+        <span id="toast-msg"></span>
+    </div>
+
+    <div id="toast" class="toast hidden">
+    <span class="toast-icon">✔</span>
+    <span id="toast-msg"></span>
+</div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
