@@ -109,4 +109,7 @@ Cada push a main dispara un nuevo deploy
 Usar:
 http://localhost:3000/api/ o https://back-end-node-js-pf-r7nu.vercel.app/
 
+## 📜 Licencia
 
+El proyecto está licenciado bajo MIT, lo que permite su uso, copia, modificación y distribución con atribución al autor.
+Revisa los términos completos en el archivo LICENSE.
